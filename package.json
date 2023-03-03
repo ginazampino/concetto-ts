@@ -2,17 +2,24 @@
     "name": "concetto",
     "private": true,
     "version": "0.0.0",
-    "type": "module",
+    "main": "dist/electron/main.js",
     "scripts": {
         "dev": "vite",
         "build": "vue-tsc && vite build",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "ts": "tsc",
+        "watch": "tsc -w",
+        "app:dev": "tsc && concurrently vite \" electron .\" \"tsc -w\"",
+        "app:build": "npm run vite:build && tsc && electron-builder",
+        "app:preview": "npm run vite:build && tsc && electron ."
     },
     "dependencies": {
+        "electron": "^23.1.2",
         "vue": "^3.2.45"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^4.0.0",
+        "concurrently": "^7.6.0",
         "prettier": "2.8.4",
         "typescript": "^4.9.3",
         "vite": "^4.1.0",

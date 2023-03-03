@@ -2,17 +2,18 @@
     "compilerOptions": {
         "target": "ESNext",
         "useDefineForClassFields": true,
-        "module": "ESNext",
+        "module": "CommonJS",
         "moduleResolution": "Node",
         "strict": true,
         "jsx": "preserve",
         "resolveJsonModule": true,
-        "isolatedModules": true,
+        "isolatedModules": false,
         "esModuleInterop": true,
         "lib": ["ESNext", "DOM"],
         "skipLibCheck": true,
-        "noEmit": true
+        "sourceMap": true,
+        "outDir": "dist/electron"
     },
-    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+    "include": ["src/electron/**/*"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }
