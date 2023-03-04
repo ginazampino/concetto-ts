@@ -1,5 +1,6 @@
 import { join } from 'path';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import { windowConfig } from './config';
 
 const isDev = process.env.npm_lifecycle_event === 'app:dev' ? true : false;
 
@@ -14,11 +15,30 @@ function createWindow() {
         },
     });
 
+    // Load application from server:
     mainWindow.loadURL(
         isDev ? 'http://localhost:1776' : join(__dirname, '../../index.html')
     );
 
+    // Launch browser dev tools on start:
     if (isDev) mainWindow.webContents.openDevTools();
+
+    // Handle window controls:
+    ipcMain.handle('quit-app', () => {
+        app.quit();
+    });
+
+    ipcMain.handle('minimize-app', () => {
+        mainWindow.minimize();
+    });
+
+    ipcMain.handle('maximize-app', () => {
+        const isMax = mainWindow.isMaximized();
+        isMax ? mainWindow.unmaximize() : mainWindow.maximize();
+    });
+
+    // Handle window resizing:
+    mainWindow.on('resized', () => {});
 }
 
 app.whenReady().then(() => {
